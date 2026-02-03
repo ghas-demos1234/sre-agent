@@ -19,11 +19,6 @@ public class HttpTrigger1
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
         
-        // Intentionally introduce a divide by zero exception
-        int dividend = 10;
-        int divisor = 0;
-        int result = dividend / divisor; // This will throw a DivideByZeroException
-        
-        return new OkObjectResult($"Welcome to Azure Functions! Result: {result}");
+        return new OkObjectResult("Welcome to Azure Functions!");
     }
 }
