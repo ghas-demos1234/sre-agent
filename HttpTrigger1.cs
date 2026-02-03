@@ -34,14 +34,6 @@ public class HttpTrigger1
             int result = dividend / divisor;
             return new OkObjectResult($"Welcome to Azure Functions! Result: {result}");
         }
-        catch (DivideByZeroException ex)
-        {
-            _logger.LogError(ex, "DivideByZeroException occurred in HttpTrigger1");
-            return new ObjectResult("An error occurred during calculation.")
-            {
-                StatusCode = StatusCodes.Status500InternalServerError
-            };
-        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unexpected error occurred in HttpTrigger1");
