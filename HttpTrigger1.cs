@@ -19,11 +19,28 @@ public class HttpTrigger1
     {
         _logger.LogInformation("C# HTTP trigger function processed a request.");
         
-        // Intentionally introduce a divide by zero exception
-        int dividend = 10;
-        int divisor = 0;
-        int result = dividend / divisor; // This will throw a DivideByZeroException
-        
-        return new OkObjectResult($"Welcome to Azure Functions! Result: {result}");
+        try
+        {
+            // Example calculation with defensive checks
+            int dividend = 10;
+            int divisor = 0;
+            
+            if (divisor == 0)
+            {
+                _logger.LogWarning("Division by zero attempted. Divisor was zero.");
+                return new BadRequestObjectResult("Invalid operation: Division by zero is not allowed.");
+            }
+            
+            int result = dividend / divisor;
+            return new OkObjectResult($"Welcome to Azure Functions! Result: {result}");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error occurred in HttpTrigger1");
+            return new ObjectResult("An unexpected error occurred.")
+            {
+                StatusCode = StatusCodes.Status500InternalServerError
+            };
+        }
     }
 }
